@@ -1,6 +1,6 @@
-function Snek() {
-  this.x = 0;
-  this.y = 0;
+function Snek(x, y) {
+  this.x = x;
+  this.y = y;
   this.xSpeed = 10;
   this.ySpeed = 0;
   this.tailLength = 0;
@@ -38,8 +38,6 @@ function Snek() {
     } else if (this.y >= canvas.height) {
       this.y = 0;
     }
-
-    this.checkCollision();
   }
 
   this.changeDirection = (direction) => {
@@ -77,9 +75,10 @@ function Snek() {
       if (this.x === tail.x && this.y === tail.y) {
         this.tail = [];
         this.tailLength = 0;
-        break;
+        return true;
       }
     }
+    return false;
   };
 
 }

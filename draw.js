@@ -3,12 +3,13 @@ const ctx = canvas.getContext("2d");
 const scale = 10;
 const rows = canvas.height / scale;
 const columns = canvas.width / scale;
+const startBtn = document.getElementById("startBtn")
 let speed = 200;
 
 let snek;
 
 (function setup() {
-  snek = new Snek();
+  snek = new Snek(2*scale, 2*scale);
   fruit = new Fruit();
 
   fruit.pickLocation();
@@ -19,7 +20,13 @@ let snek;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     fruit.draw();
     snek.update();
-    snek.draw();
+    if (snek.checkCollision()) {
+      alert("GAME OVER");
+      document.location.reload();
+      clearInterval(id);
+    } else {
+      snek.draw();
+    }
 
     if (snek.eat(fruit)) {
       fruit.pickLocation();
