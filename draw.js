@@ -6,6 +6,7 @@ let ctx;
 let rows;
 let columns;
 let scale;
+let startBtn = document.getElementById("startBtn");
 
 // sprites
 let snek;
@@ -15,7 +16,9 @@ let fruit;
 let interval;
 
 const initialize = () => {
-  console.log("init");
+  // hide startBtn
+  startBtn.style.display = "none";
+
   // init canvas
   var canvas = document.getElementById("canvas");
   ctx = canvas.getContext("2d");
@@ -41,11 +44,14 @@ const paint = () => {
   fruit.draw();
   snek.update();
 
-  // check for collision and draw snek
+  // check for collision of game over condition
   if (snek.checkCollision()) {
+    // stop game and display game over
     alert("GAME OVER");
-    document.location.reload();
     clearInterval(interval);
+
+    // show start button
+    startBtn.style.display = "";
   } else {
     snek.draw();
   }
@@ -54,6 +60,11 @@ const paint = () => {
   if (snek.eat(fruit)) {
     fruit.pickLocation();
   }
+
+  // score
+  // ctx.font = "bold 20px Open Sans";
+  // ctx.textAlign = "center";
+  // ctx.fillText('Score: 0000', 50, 50);
 }
 
 // read user input
