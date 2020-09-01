@@ -33,22 +33,41 @@ function Snek(x, y) {
   }
 
   this.changeDirection = (direction) => {
+    let oppositeDirection;
+    if (this.xSpeed > 0) {
+      oppositeDirection = 'Left';
+    } else if (this.xSpeed < 0) {
+      oppositeDirection = 'Right';
+    } else if (this.ySpeed > 0) {
+      oppositeDirection = 'Up';
+    } else {
+      oppositeDirection = 'Down'
+    }
+
     switch (direction) {
     case 'Up':
-      this.xSpeed = 0;
-      this.ySpeed = -scale * 1;
+      if (direction !== oppositeDirection) {
+        this.xSpeed = 0;
+        this.ySpeed = -scale * 1;
+      }
       break;
     case 'Down':
-      this.xSpeed = 0;
-      this.ySpeed = scale * 1;
+      if (direction !== oppositeDirection) {
+        this.xSpeed = 0;
+        this.ySpeed = scale * 1;
+      }
       break;
     case 'Left':
-      this.xSpeed = -scale * 1;
-      this.ySpeed = 0;
+      if (direction !== oppositeDirection) {
+        this.xSpeed = -scale * 1;
+        this.ySpeed = 0;
+      }
       break;
     case 'Right':
-      this.xSpeed = scale * 1;
-      this.ySpeed = 0;
+      if (direction !== oppositeDirection) {
+        this.xSpeed = scale * 1;
+        this.ySpeed = 0;
+      }
       break;
     }
   };
