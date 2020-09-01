@@ -58,7 +58,7 @@ const paint = () => {
   snek.update();
 
   // check for collision of game over condition
-  if (snek.checkCollision()) {
+  if (snek.checkCollision(gameHeight, gameWidth)) {
     // stop game and display game over
     alert("GAME OVER");
     clearInterval(interval);

@@ -30,18 +30,6 @@ function Snek(x, y) {
 
     this.x += this.xSpeed;
     this.y += this.ySpeed;
-
-    if (this.x < 0) {
-      this.x = gameWidth - scale;
-    } else if (this.x >= gameWidth) {
-      this.x = 0;
-    }
-    if (this.y < 0) {
-      this.y = gameHeight - scale;
-    } else if (this.y >= gameHeight) {
-      this.y = 0;
-    }
-    console.log(this.x, this.y);
   }
 
   this.changeDirection = (direction) => {
@@ -77,7 +65,13 @@ function Snek(x, y) {
     return false;
   }
 
-  this.checkCollision = () => {
+  this.checkCollision = (gameHeight, gameWidth) => {
+    // check that the snek hasn't left the game area
+    if (this.x < 0 || this.x >= gameWidth || this.y < 0 || this.y >= gameWidth) {
+      return true;
+    }
+
+    // check that the snek didn't run into it's tail
     for (tail of this.tail) {
       if (this.x === tail.x && this.y === tail.y) {
         this.tail = [];
