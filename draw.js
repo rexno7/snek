@@ -39,7 +39,7 @@ const initialize = () => {
   // init sprites
   snek = new Snek(0, 0);
   fruit = new Fruit();
-  fruit.pickLocation();
+  fruit.pickLocation(snek);
 
   // init score
   score = 0;
@@ -88,7 +88,7 @@ const paint = () => {
 
   // check for fruit collision
   if (snek.eat(fruit)) {
-    fruit.pickLocation();
+    fruit.pickLocation(snek);
     score++;
   }
 
