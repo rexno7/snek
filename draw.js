@@ -59,29 +59,11 @@ const paint = () => {
 
   // check for collision of game over condition
   if (snek.checkCollision(gameHeight, gameWidth)) {
-    // stop game and display game over
+    // game over and display start button
     clearInterval(interval);
-
-    ctx.lineWidth = 26;
-    ctx.moveTo(27, gameHeight / 2 - 47);
-    ctx.lineTo(gameWidth - 27, gameHeight / 2 - 47);
-    ctx.strokeStyle = "black";
-    ctx.stroke();
-
-    ctx.lineWidth = 20;
-    ctx.beginPath();
-    ctx.moveTo(30, gameHeight / 2 - 47);
-    ctx.lineTo(gameWidth - 30, gameHeight / 2 - 47);
-    ctx.strokeStyle = "white";
-    ctx.stroke();
-
-    ctx.font = "bold 20px sans";
-    ctx.textAlign = "center";
-    ctx.fillStyle = "red";
-    ctx.fillText('GAME OVER!', gameWidth / 2, gameHeight / 2 - 40);
-
-    // show start button
+    drawGameOver();
     startBtn.style.display = "";
+
   } else {
     snek.draw();
   }
@@ -109,6 +91,26 @@ const drawScore = () => {
   ctx.textAlign = "left";
   ctx.fillStyle = "black";
   ctx.fillText('Score: ' + score, 0, 220, 200);
+}
+
+const drawGameOver {
+  ctx.lineWidth = 26;
+  ctx.moveTo(27, gameHeight / 2 - 47);
+  ctx.lineTo(gameWidth - 27, gameHeight / 2 - 47);
+  ctx.strokeStyle = "black";
+  ctx.stroke();
+
+  ctx.lineWidth = 20;
+  ctx.beginPath();
+  ctx.moveTo(30, gameHeight / 2 - 47);
+  ctx.lineTo(gameWidth - 30, gameHeight / 2 - 47);
+  ctx.strokeStyle = "white";
+  ctx.stroke();
+
+  ctx.font = "bold 20px sans";
+  ctx.textAlign = "center";
+  ctx.fillStyle = "red";
+  ctx.fillText('GAME OVER!', gameWidth / 2, gameHeight / 2 - 40);
 }
 
 // read user input
