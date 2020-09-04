@@ -57,13 +57,11 @@ const paint = () => {
   fruit.draw();
   snek.update();
 
-  // check for collision of game over condition
+  // stop game and display game over if collision detected
   if (snek.checkCollision(gameHeight, gameWidth)) {
-    // game over and display start button
     clearInterval(interval);
     drawGameOver();
     startBtn.style.display = "";
-
   } else {
     snek.draw();
   }
@@ -93,7 +91,7 @@ const drawScore = () => {
   ctx.fillText('Score: ' + score, 0, 220, 200);
 }
 
-const drawGameOver {
+const drawGameOver = () => {
   ctx.lineWidth = 26;
   ctx.moveTo(27, gameHeight / 2 - 47);
   ctx.lineTo(gameWidth - 27, gameHeight / 2 - 47);
