@@ -1,6 +1,3 @@
-// milliseconds per frame (speed of snek)
-let speed = 200;
-
 // canvas
 let ctx;
 let rows;
@@ -48,7 +45,7 @@ const initialize = () => {
   paint();
 
   // init frame
-  interval = window.setInterval(paint, speed);
+  interval = window.setInterval(paint, calculateSpeed(snek));
 };
 
 const paint = () => {
@@ -70,6 +67,8 @@ const paint = () => {
   if (snek.eat(fruit)) {
     fruit.pickLocation(snek);
     score++;
+    clearInterval(interval);
+    interval = window.setInterval(paint, calculateSpeed(snek));
   }
 
   drawScore();
@@ -109,6 +108,21 @@ const drawGameOver = () => {
   ctx.textAlign = "center";
   ctx.fillStyle = "red";
   ctx.fillText('GAME OVER!', gameWidth / 2, gameHeight / 2 - 40);
+}
+
+const calculateSpeed = (snek) => {
+  if (snek.tailLength < 15) {
+    return 200;
+  } else if (snek.tailLength < 30) {
+    return 160;
+  } else if (snek.tailLength < 50) {
+    return 120;
+  } else if (snek.tailLength < 75) {
+    return 90;
+  } else if (snek.tailLength < 100) {
+    return 70;
+  }
+  return 50;
 }
 
 // read user input
