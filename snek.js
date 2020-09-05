@@ -7,7 +7,7 @@ function Snek(x, y) {
   this.tail = [];
 
   this.draw = () => {
-    ctx.fillStyle = "#FFFFFF";
+    ctx.fillStyle = "limegreen";
 
     for (let i = 0; i < this.tail.length; i++) {
       ctx.fillRect(this.tail[i].x, this.tail[i].y, scale, scale);
