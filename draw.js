@@ -20,10 +20,7 @@ let sbHeight = 30;
 let gameHeight;
 let gameWidth;
 
-const initialize = () => {
-  // hide startBtn
-  startBtn.style.display = "none";
-
+const preLoad = () => {
   // init canvas
   var canvas = document.getElementById("canvas");
   ctx = canvas.getContext("2d");
@@ -34,7 +31,21 @@ const initialize = () => {
   columns = gameHeight / scale;
 
   // init sprites
-  snek = new Snek(0, 0);
+  snek = new Snek(20, 20);
+  fruit = new Fruit();
+
+  // init score
+  score = 0;
+
+  paint();
+};
+
+const initialize = () => {
+  // hide startBtn
+  startBtn.style.display = "none";
+
+  // init sprites
+  snek = new Snek(20, 20);
   fruit = new Fruit();
   fruit.pickLocation(snek);
 
