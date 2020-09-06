@@ -2,7 +2,7 @@
 let ctx;
 let rows;
 let columns;
-let scale;
+let scale = 15;
 let startBtn = document.getElementById("startBtn");
 let resizeBox = document.getElementById("resizeText");
 let scaleBox = document.getElementById("scaleText");
@@ -31,6 +31,7 @@ const resizeCanvas = () => {
   // TODO: this needs to be a multiple of scale
   canvas.width = resizeBox.value;
   canvas.height = +resizeBox.value + sbHeight;
+  scale = +scaleBox.value;
   preLoad();
 }
 
@@ -53,7 +54,6 @@ const preLoad = () => {
   // init canvas
   var canvas = document.getElementById("canvas");
   ctx = canvas.getContext("2d");
-  scale = +scaleBox.value || 15;
   gameWidth = canvas.width;
   gameHeight = canvas.height - sbHeight;
   rows = gameWidth / scale;
