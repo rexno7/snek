@@ -27,29 +27,6 @@ let sbHeight = 30;
 let gameHeight;
 let gameWidth;
 
-const resizeCanvas = () => {
-  // TODO: this needs to be a multiple of scale
-  canvas.width = resizeBox.value;
-  canvas.height = +resizeBox.value + sbHeight;
-  scale = +scaleBox.value;
-  preLoad();
-}
-
-const canvasSize = (preset) => {
-  let size = 300;
-  if (preset === "small") {
-    size = 225;
-  } else if (preset === "large") {
-    size = 375;
-  } else if (preset === "giant") {
-    size = 450;
-  }
-  canvas.width = size;
-  canvas.height = size + sbHeight;
-  scale = 15;
-  preLoad();
-}
-
 const preLoad = () => {
   // init canvas
   var canvas = document.getElementById("canvas");
@@ -70,7 +47,7 @@ const preLoad = () => {
   paint();
 };
 
-const initialize = () => {
+const startGame = () => {
   // hide startBtn
   startBtn.style.display = "none";
 
@@ -164,6 +141,29 @@ const calculateSpeed = (snek) => {
     return 70;
   }
   return 50;
+}
+
+const devResizeCanvas = () => {
+  // TODO: this needs to be a multiple of scale
+  canvas.width = resizeBox.value;
+  canvas.height = +resizeBox.value + sbHeight;
+  scale = +scaleBox.value;
+  preLoad();
+}
+
+const setCanvasSize = (preset) => {
+  let size = 300;
+  if (preset === "small") {
+    size = 225;
+  } else if (preset === "large") {
+    size = 375;
+  } else if (preset === "giant") {
+    size = 450;
+  }
+  canvas.width = size;
+  canvas.height = size + sbHeight;
+  scale = 15;
+  preLoad();
 }
 
 // read user input
