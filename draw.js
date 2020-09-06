@@ -4,6 +4,8 @@ let rows;
 let columns;
 let scale;
 let startBtn = document.getElementById("startBtn");
+let resizeBox = document.getElementById("resizeText");
+let scaleBox = document.getElementById("scaleText");
 
 // sprites
 let snek;
@@ -20,18 +22,26 @@ let sbHeight = 30;
 let gameHeight;
 let gameWidth;
 
+const resizeCanvas = () => {
+  // TODO: this needs to be a multiple of scale
+  canvas.width = resizeBox.value;
+  canvas.height = +resizeBox.value + sbHeight;
+  preLoad();
+}
+
 const preLoad = () => {
   // init canvas
   var canvas = document.getElementById("canvas");
   ctx = canvas.getContext("2d");
-  scale = 10;
+  scale = +scaleBox.value || 10;
   gameWidth = canvas.width;
   gameHeight = canvas.height - sbHeight;
   rows = gameWidth / scale;
   columns = gameHeight / scale;
+  // window.addEventListener('resize', resizeCanvas, false);
 
   // init sprites
-  snek = new Snek(20, 20);
+  snek = new Snek(2 * scale, 2 * scale);
   fruit = new Fruit();
 
   // init score
@@ -45,7 +55,7 @@ const initialize = () => {
   startBtn.style.display = "none";
 
   // init sprites
-  snek = new Snek(20, 20);
+  snek = new Snek(2 * scale, 2 * scale);
   fruit = new Fruit();
   fruit.pickLocation(snek);
 
@@ -88,8 +98,8 @@ const drawScore = () => {
   // divider for score
   ctx.lineWidth = 30;
   ctx.beginPath();
-  ctx.moveTo(0, 215);
-  ctx.lineTo(200, 215);
+  ctx.moveTo(0, gameHeight + (sbHeight / 2));
+  ctx.lineTo(gameWidth, gameHeight + (sbHeight / 2));
   ctx.strokeStyle = "white";
   ctx.stroke();
 
@@ -97,7 +107,7 @@ const drawScore = () => {
   ctx.font = "bold 20px sans";
   ctx.textAlign = "left";
   ctx.fillStyle = "black";
-  ctx.fillText('Score: ' + score, 0, 220, 200);
+  ctx.fillText('Score: ' + score, 0, gameHeight + sbHeight - 10, gameWidth);
 }
 
 const drawGameOver = () => {
