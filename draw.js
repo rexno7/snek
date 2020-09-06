@@ -7,6 +7,11 @@ let startBtn = document.getElementById("startBtn");
 let resizeBox = document.getElementById("resizeText");
 let scaleBox = document.getElementById("scaleText");
 
+// [small]  225px / 15 scale = 15 rows
+// [normal] 300px / 15 scale = 20 rows
+// [large]  375px / 15 scale = 25 rows
+// [xlarge] 450px / 15 scale = 30 rows
+
 // sprites
 let snek;
 let fruit;
@@ -29,11 +34,26 @@ const resizeCanvas = () => {
   preLoad();
 }
 
+const canvasSize = (preset) => {
+  let size = 300;
+  if (preset === "small") {
+    size = 225;
+  } else if (preset === "large") {
+    size = 375;
+  } else if (preset === "giant") {
+    size = 450;
+  }
+  canvas.width = size;
+  canvas.height = size + sbHeight;
+  scale = 15;
+  preLoad();
+}
+
 const preLoad = () => {
   // init canvas
   var canvas = document.getElementById("canvas");
   ctx = canvas.getContext("2d");
-  scale = +scaleBox.value || 10;
+  scale = +scaleBox.value || 15;
   gameWidth = canvas.width;
   gameHeight = canvas.height - sbHeight;
   rows = gameWidth / scale;

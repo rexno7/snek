@@ -18,7 +18,12 @@
 
 <body onLoad="preLoad()">
   <button type="button" id="startBtn" onclick="initialize()">Start</button>
-  <canvas id="canvas" width="200" height="230" style="background-color: #3e3e3e"></canvas>
+  <canvas id="canvas" width="300" height="330" style="background-color: #3e3e3e"></canvas>
+  <br />
+  <button type="button" id="small" onclick="canvasSize('small')">Small</button>
+  <button type="button" id="normal" onclick="canvasSize('normal')">Normal</button>
+  <button type="button" id="large" onclick="canvasSize('large')">Large</button>
+  <button type="button" id="giant" onclick="canvasSize('giant')">Giant</button>
   <br />
   resize
   <input type="text" id="resizeText" />
