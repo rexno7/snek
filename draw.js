@@ -107,8 +107,9 @@ const drawScore = () => {
   // score
   ctx.font = "bold 20px sans";
   ctx.textAlign = "left";
+  ctx.textBaseline = "middle";
   ctx.fillStyle = "black";
-  ctx.fillText('Score: ' + score, 0, gameHeight + sbHeight - 10, gameWidth);
+  ctx.fillText('Score: ' + score, 0, gameHeight + sbHeight / 2, gameWidth);
 }
 
 const drawGameOver = () => {
