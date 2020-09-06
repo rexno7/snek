@@ -3,7 +3,6 @@ let ctx;
 let rows;
 let columns;
 let scale = 15;
-let startBtn = document.getElementById("startBtn");
 let resizeBox = document.getElementById("resizeText");
 let scaleBox = document.getElementById("scaleText");
 
@@ -15,6 +14,9 @@ let scaleBox = document.getElementById("scaleText");
 // sprites
 let snek;
 let fruit;
+
+// buttons
+let startBtn;
 
 // frame interval
 let interval;
@@ -35,6 +37,8 @@ const preLoad = () => {
   gameHeight = canvas.height - sbHeight;
   rows = gameWidth / scale;
   columns = gameHeight / scale;
+  canvas.onmousedown = myMouseDown;
+  canvas.onmouseup = myMouseUp;
   // window.addEventListener('resize', resizeCanvas, false);
 
   // init sprites
@@ -45,12 +49,11 @@ const preLoad = () => {
   score = 0;
 
   paint();
+  startBtn = new Button("START", gameWidth / 2, gameHeight / 2, 100, 30, true);
+  startBtn.draw()
 };
 
 const startGame = () => {
-  // hide startBtn
-  startBtn.style.display = "none";
-
   // init sprites
   snek = new Snek(2 * scale, 2 * scale);
   fruit = new Fruit();
@@ -77,7 +80,8 @@ const paint = () => {
   if (snek.checkCollision(gameHeight, gameWidth)) {
     clearInterval(interval);
     drawGameOver();
-    startBtn.style.display = "";
+    startBtn = new Button("Try Again?", gameWidth / 2, gameHeight / 2, 120, 30, true);
+    startBtn.draw()
   }
 
   // check for fruit collision
@@ -124,8 +128,9 @@ const drawGameOver = () => {
 
   ctx.font = "bold 20px sans";
   ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
   ctx.fillStyle = "red";
-  ctx.fillText('GAME OVER!', gameWidth / 2, gameHeight / 2 - 40);
+  ctx.fillText('GAME OVER!', gameWidth / 2, gameHeight / 2 - 47);
 }
 
 const calculateSpeed = (snek) => {
@@ -166,7 +171,27 @@ const setCanvasSize = (preset) => {
   preLoad();
 }
 
-// read user input
+// Inputs
+
+const myMouseDown = (e) => {
+  if (startBtn) {
+    console.log(`down(${e.offsetX},${e.offsetY}): ${startBtn.isClicked(e.offsetX, e.offsetY)}`);
+  } else {
+    console.log(`down(${e.offsetX},${e.offsetY})`);
+  }
+
+}
+
+const myMouseUp = (e) => {
+  console.log(`up(${e.offsetX},${e.offsetY})`);
+  if (startBtn) {
+    if (startBtn.isClicked(e.offsetX, e.offsetY)) {
+      startBtn = null;
+      startGame();
+    }
+  }
+}
+
 window.addEventListener('keydown', ((event) => {
   const direction = event.key.replace('Arrow', '');
   snek.changeDirection(direction);
