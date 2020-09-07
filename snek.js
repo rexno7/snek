@@ -13,7 +13,25 @@ function Snek(x, y) {
       ctx.fillRect(this.tail[i].x, this.tail[i].y, scale, scale);
     }
 
-    ctx.fillRect(this.x, this.y, scale, scale);
+    drawSnekHead();
+  }
+
+  drawSnekHead = () => {
+    // draw circle for head
+    ctx.beginPath();
+    ctx.arc(this.x + scale / 2, this.y + scale / 2, scale / 2, 0, 2 * Math.PI);
+    ctx.fill();
+
+    // fill back half of block to connect to tail
+    if (this.xSpeed > 0) {
+      ctx.fillRect(this.x, this.y, scale / 2, scale);
+    } else if (this.xSpeed < 0) {
+      ctx.fillRect(this.x + scale / 2, this.y, scale / 2, scale);
+    } else if (this.ySpeed > 0) {
+      ctx.fillRect(this.x, this.y, scale, scale / 2);
+    } else {
+      ctx.fillRect(this.x, this.y + scale / 2, scale, scale / 2);
+    }
   }
 
   this.update = () => {
@@ -30,6 +48,18 @@ function Snek(x, y) {
 
     this.x += this.xSpeed;
     this.y += this.ySpeed;
+  }
+
+  this.getDirection = () => {
+    if (this.xSpeed > 0) {
+      return 'Right';
+    } else if (this.xSpeed < 0) {
+      return 'Left';
+    } else if (this.ySpeed > 0) {
+      return 'Down';
+    } else {
+      return 'Up'
+    }
   }
 
   this.changeDirection = (direction) => {
