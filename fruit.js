@@ -35,8 +35,8 @@ function Fruit() {
     ctx.beginPath();
     ctx.lineWidth = 1;
     ctx.moveTo(this.x + radius, this.y + (radius / 2));
-    ctx.lineTo(this.x + radius, this.y - (radius / 2));
-    ctx.strokeStyle = "lightbrown";
+    ctx.lineTo(this.x + radius, this.y - (radius / 4));
+    ctx.strokeStyle = "tan";
     ctx.stroke();
 
     // leaf
