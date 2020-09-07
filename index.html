@@ -17,10 +17,23 @@
 </head>
 
 <body onLoad="preLoad()">
-  <button type="button" id="startBtn" onclick="initialize()">Start</button>
-  <canvas id="canvas" width="200" height="230" style="background-color: #3e3e3e"></canvas>
+  <button type="button" id="small" onclick="setCanvasSize('small')">Small</button>
+  <button type="button" id="normal" onclick="setCanvasSize('normal')">Normal</button>
+  <button type="button" id="large" onclick="setCanvasSize('large')">Large</button>
+  <button type="button" id="giant" onclick="setCanvasSize('giant')">Giant</button>
+  <br />
+  <canvas id="canvas" width="300" height="330" style="background-color: #3e3e3e"></canvas>
+  <br />
+  resize
+  <input type="text" id="resizeText" />
+  <br />
+  scale
+  <input type="text" id="scaleText" />
+  <br />
+  <button type="button" onclick="devResizeCanvas()">Resize</button>
   <script type="text/javascript" src="fruit.js"></script>
   <script type="text/javascript" src="snek.js"></script>
+  <script type="text/javascript" src="button.js"></script>
   <script type="text/javascript" src="draw.js"></script>
 </body>
 

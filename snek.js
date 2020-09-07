@@ -1,7 +1,7 @@
 function Snek(x, y) {
   this.x = x;
   this.y = y;
-  this.xSpeed = 10;
+  this.xSpeed = scale;
   this.ySpeed = 0;
   this.tailLength = 0;
   this.tail = [];
