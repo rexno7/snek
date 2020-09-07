@@ -1,4 +1,4 @@
-function Button(text, x, y, width, height, clickable) {
+function Button(text, x, y, width, height, clickable, color = "green") {
   this.x = x;
   this.y = y;
   this.width = width;
@@ -23,7 +23,7 @@ function Button(text, x, y, width, height, clickable) {
     ctx.font = "bold 20px sans";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = "green";
+    ctx.fillStyle = color;
     ctx.fillText(text, this.x, this.y);
   }
 

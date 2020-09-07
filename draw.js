@@ -79,7 +79,8 @@ const paint = () => {
   // stop game and display game over if collision detected
   if (snek.checkCollision(gameHeight, gameWidth)) {
     clearInterval(interval);
-    drawGameOver();
+    const gameOver = new Button("GAME OVER!", gameWidth / 2, gameHeight / 2 - 50, gameWidth - 60, 30, false, "red");
+    gameOver.draw();
     startBtn = new Button("Try Again?", gameWidth / 2, gameHeight / 2, 120, 30, true);
     startBtn.draw()
   }
@@ -112,27 +113,7 @@ const drawScore = () => {
   ctx.fillText('Score: ' + score, 0, gameHeight + sbHeight / 2, gameWidth);
 }
 
-const drawGameOver = () => {
-  ctx.beginPath();
-  ctx.lineWidth = 26;
-  ctx.moveTo(27, gameHeight / 2 - 47);
-  ctx.lineTo(gameWidth - 27, gameHeight / 2 - 47);
-  ctx.strokeStyle = "black";
-  ctx.stroke();
-
-  ctx.lineWidth = 20;
-  ctx.beginPath();
-  ctx.moveTo(30, gameHeight / 2 - 47);
-  ctx.lineTo(gameWidth - 30, gameHeight / 2 - 47);
-  ctx.strokeStyle = "white";
-  ctx.stroke();
-
-  ctx.font = "bold 20px sans";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillStyle = "red";
-  ctx.fillText('GAME OVER!', gameWidth / 2, gameHeight / 2 - 47);
-}
+// Speed
 
 const calculateSpeed = (snek) => {
   if (snek.tailLength < 15) {
@@ -148,6 +129,8 @@ const calculateSpeed = (snek) => {
   }
   return 50;
 }
+
+// Canvas sizing
 
 const devResizeCanvas = () => {
   // TODO: this needs to be a multiple of scale
