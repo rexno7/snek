@@ -54,6 +54,9 @@ const preLoad = () => {
 };
 
 const startGame = () => {
+  // hide cursor
+  canvas.style.cursor = "none";
+
   // init sprites
   snek = new Snek(2 * scale, 2 * scale);
   fruit = new Fruit();
@@ -76,13 +79,14 @@ const paint = () => {
   snek.update();
   snek.draw();
 
-  // stop game and display game over if collision detected
+  // game over condition
   if (snek.checkCollision(gameHeight, gameWidth)) {
     clearInterval(interval);
     const gameOver = new Button("GAME OVER!", gameWidth / 2, gameHeight / 2 - 50, gameWidth - 60, 30, false, "red");
     gameOver.draw();
     startBtn = new Button("Try Again?", gameWidth / 2, gameHeight / 2, 120, 30, true);
     startBtn.draw()
+    canvas.style.cursor = "";
   }
 
   // check for fruit collision
