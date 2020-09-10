@@ -9,8 +9,32 @@ function Snek(x, y) {
   this.draw = () => {
     ctx.fillStyle = "limegreen";
 
+    let tailPrev = {
+      x: this.x,
+      y: this.y
+    };
     for (let i = 0; i < this.tail.length; i++) {
-      ctx.fillRect(this.tail[i].x, this.tail[i].y, scale, scale);
+      // ctx.fillRect(this.tail[i].x, this.tail[i].y, scale, scale);
+      ctx.save();
+      const translateX = this.tail[i].x + scale / 2;
+      const translateY = this.tail[i].y + scale / 2;
+      ctx.translate(translateX, translateY);
+      ctx.rotate(Math.PI / 2 * (i % 2));
+      // if (tailPrev.x === this.tail[i].x && tailPrev.y > this.tail[i].y) {
+      //   // down
+      //   ctx.rotate(Math.PI / 2 + Math.PI / 2 * (i % 2)); // 90
+      // } else if (tailPrev.x > this.tail[i].x && tailPrev.y === this.tail[i].y) {
+      //   // left
+      //   ctx.rotate(Math.PI + Math.PI / 2 * (i % 2)); // 180
+      // } else if (tailPrev.x === this.tail[i].x && tailPrev.y < this.tail[i].y) {
+      //   // up
+      //   ctx.rotate(3 * Math.PI / 2 + Math.PI / 2 * (i % 2));
+      // } else {
+      //   ctx.rotate(Math.PI / 2 * (i % 2));
+      // }
+      ctx.drawImage(snek_body, 0 - scale / 2, 0 - scale / 2, scale, scale);
+      // ctx.translate(-translateX, -translateY);
+      ctx.restore();
     }
 
     drawSnekHead();
