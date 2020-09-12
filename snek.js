@@ -18,21 +18,38 @@ function Snek(x, y) {
       ctx.save();
       const translateX = this.tail[i].x + scale / 2;
       const translateY = this.tail[i].y + scale / 2;
+      let body = snek_body;
+      const flipX = Math.PI * ((this.x / scale) % 2);
+      const flipY = Math.PI * ((this.y / scale) % 2);
       ctx.translate(translateX, translateY);
-      ctx.rotate(Math.PI / 2 * (i % 2));
-      // if (tailPrev.x === this.tail[i].x && tailPrev.y > this.tail[i].y) {
-      //   // down
-      //   ctx.rotate(Math.PI / 2 + Math.PI / 2 * (i % 2)); // 90
-      // } else if (tailPrev.x > this.tail[i].x && tailPrev.y === this.tail[i].y) {
-      //   // left
-      //   ctx.rotate(Math.PI + Math.PI / 2 * (i % 2)); // 180
-      // } else if (tailPrev.x === this.tail[i].x && tailPrev.y < this.tail[i].y) {
-      //   // up
-      //   ctx.rotate(3 * Math.PI / 2 + Math.PI / 2 * (i % 2));
-      // } else {
-      //   ctx.rotate(Math.PI / 2 * (i % 2));
-      // }
-      ctx.drawImage(snek_body, 0 - scale / 2, 0 - scale / 2, scale, scale);
+      // ctx.rotate(Math.PI / 2 * (i % 2));
+      if (tailPrev.x === this.tail[i].x && tailPrev.y > this.tail[i].y) {
+        // down 90
+        if (i + 1 < this.tailLength - 1) {
+          console.log(`down ${this.tail[i].x} = ${this.tail[i+1].x}`);
+        }
+        if (i + 1 < this.tailLength - 1 && this.tail[i].x !== this.tail[i + 1].x) {
+          body = snek_body_corner;
+          console.log("corner");
+          if (this.tail[i].x < this.tail[i + 1]) {
+            ctx.rotate(Math.PI / 2);
+          } else {
+            ctx.rotate(3 * Math.PI / 2);
+          }
+        } else {
+          ctx.rotate((Math.PI / 2) + flipY);
+        }
+      } else if (tailPrev.x > this.tail[i].x && tailPrev.y === this.tail[i].y) {
+        // left 180
+        ctx.rotate(Math.PI + flipX);
+      } else if (tailPrev.x === this.tail[i].x && tailPrev.y < this.tail[i].y) {
+        // up 270
+        ctx.rotate((3 * Math.PI / 2) + flipY);
+      } else {
+        // right 0 / 360
+        ctx.rotate(flipX);
+      }
+      ctx.drawImage(body, 0 - scale / 2, 0 - scale / 2, scale, scale);
       // ctx.translate(-translateX, -translateY);
       ctx.restore();
     }
