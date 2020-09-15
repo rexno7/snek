@@ -29,6 +29,9 @@ let sbHeight = 30;
 let gameHeight;
 let gameWidth;
 
+let devMode = false;
+let advanceFrame = false;
+
 const preLoad = () => {
   // init canvas
   var canvas = document.getElementById("canvas");
@@ -51,6 +54,8 @@ const preLoad = () => {
   paint();
   startBtn = new Button("START", gameWidth / 2, gameHeight / 2, 100, 30, true);
   startBtn.draw()
+
+  devMode = document.getElementById("toggleDevMode").checked;
 };
 
 const startGame = () => {
@@ -73,31 +78,37 @@ const startGame = () => {
 };
 
 const paint = () => {
-  // paint the scene
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  fruit.draw();
-  snek.update();
-  snek.draw();
+  if (!devMode || advanceFrame) {
+    // paint the scene
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    fruit.draw();
+    snek.update();
+    snek.draw();
 
-  // game over condition
-  if (snek.checkCollision(gameHeight, gameWidth)) {
-    clearInterval(interval);
-    const gameOver = new Button("GAME OVER!", gameWidth / 2, gameHeight / 2 - 50, gameWidth - 60, 30, false, "red");
-    gameOver.draw();
-    startBtn = new Button("Try Again?", gameWidth / 2, gameHeight / 2, 120, 30, true);
-    startBtn.draw()
-    canvas.style.cursor = "";
+    // game over condition
+    if (snek.checkCollision(gameHeight, gameWidth)) {
+      clearInterval(interval);
+      const gameOver = new Button("GAME OVER!", gameWidth / 2, gameHeight / 2 - 50, gameWidth - 60, 30, false, "red");
+      gameOver.draw();
+      startBtn = new Button("Try Again?", gameWidth / 2, gameHeight / 2, 120, 30, true);
+      startBtn.draw()
+      canvas.style.cursor = "";
+    }
+
+    // check for fruit collision
+    if (snek.eat(fruit)) {
+      fruit.pickLocation(snek);
+      score++;
+      clearInterval(interval);
+      interval = window.setInterval(paint, calculateSpeed(snek));
+    }
+
+    drawScore();
+
+    if (advanceFrame) {
+      advanceFrame = false;
+    }
   }
-
-  // check for fruit collision
-  if (snek.eat(fruit)) {
-    fruit.pickLocation(snek);
-    score++;
-    clearInterval(interval);
-    interval = window.setInterval(paint, calculateSpeed(snek));
-  }
-
-  drawScore();
 }
 
 const drawScore = () => {
@@ -184,3 +195,13 @@ window.addEventListener('keydown', ((event) => {
   const direction = event.key.replace('Arrow', '');
   snek.changeDirection(direction);
 }));
+
+const toggleDevMode = () => {
+  devMode = document.getElementById("toggleDevMode").checked;
+  console.log(`toggleDevMode: ${devMode}`);
+}
+
+const advanceOneFrame = () => {
+  console.log(`advanceFrame: ${advanceFrame}`);
+  advanceFrame = true;
+}
