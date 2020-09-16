@@ -9,14 +9,11 @@ function Snek(x, y) {
   this.draw = () => {
     ctx.fillStyle = "limegreen";
 
-    printTail();
-
     let tailPrev = {
       x: this.x,
       y: this.y
     };
     for (let i = this.tail.length - 1; i >= 0; i--) {
-      // ctx.fillRect(this.tail[i].x, this.tail[i].y, scale, scale);
       ctx.save();
       const translateX = this.tail[i].x + scale / 2;
       const translateY = this.tail[i].y + scale / 2;
@@ -24,39 +21,56 @@ function Snek(x, y) {
       const flipX = Math.PI * ((this.x / scale) % 2);
       const flipY = Math.PI * ((this.y / scale) % 2);
       ctx.translate(translateX, translateY);
-      // ctx.rotate(Math.PI / 2 * (i % 2));
       if (tailPrev.x === this.tail[i].x && tailPrev.y > this.tail[i].y) {
         // down 90
-        console.log("down");
-        // ctx.rotate((Math.PI / 2) + flipY);
         if (i - 1 >= 0 && this.tail[i].x !== this.tail[i - 1].x) {
           body = snek_body_corner;
           if (this.tail[i].x > this.tail[i - 1].x) {
-            console.log("from right");
             //no rotation
           } else {
-            console.log("from left");
             ctx.rotate(3 * Math.PI / 2);
           }
         } else {
           ctx.rotate((Math.PI / 2) + flipY);
         }
       } else if (tailPrev.x > this.tail[i].x && tailPrev.y === this.tail[i].y) {
-        console.log("right");
         // right 180
-        ctx.rotate(flipX);
+        if (i - 1 >= 0 && this.tail[i].y !== this.tail[i - 1].y) {
+          body = snek_body_corner;
+          if (this.tail[i].y > this.tail[i - 1].y) {
+            ctx.rotate(Math.PI);
+          } else {
+            ctx.rotate(3 * Math.PI / 2);
+          }
+        } else {
+          ctx.rotate(flipX);
+        }
       } else if (tailPrev.x === this.tail[i].x && tailPrev.y < this.tail[i].y) {
         // up 270
-        console.log("up");
-        ctx.rotate((3 * Math.PI / 2) + flipY);
-
+        if (i - 1 >= 0 && this.tail[i].x !== this.tail[i - 1].x) {
+          body = snek_body_corner;
+          if (this.tail[i].x > this.tail[i - 1].x) {
+            ctx.rotate(Math.PI / 2);
+          } else {
+            ctx.rotate(Math.PI);
+          }
+        } else {
+          ctx.rotate((3 * Math.PI / 2) + flipY);
+        }
       } else {
         // left 0 / 360
-        console.log("left");
-        ctx.rotate(Math.PI + flipX);
+        if (i - 1 >= 0 && this.tail[i].y !== this.tail[i - 1].y) {
+          body = snek_body_corner;
+          if (this.tail[i].y > this.tail[i - 1].y) {
+            ctx.rotate(Math.PI / 2);
+          } else {
+            // no rotation
+          }
+        } else {
+          ctx.rotate(Math.PI + flipX);
+        }
       }
       ctx.drawImage(body, 0 - scale / 2, 0 - scale / 2, scale, scale);
-      // ctx.translate(-translateX, -translateY);
       ctx.restore();
 
       tailPrev = {
