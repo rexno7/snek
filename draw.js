@@ -198,10 +198,8 @@ window.addEventListener('keydown', ((event) => {
 
 const toggleDevMode = () => {
   devMode = document.getElementById("toggleDevMode").checked;
-  console.log(`toggleDevMode: ${devMode}`);
 }
 
 const advanceOneFrame = () => {
-  console.log(`advanceFrame: ${advanceFrame}`);
   advanceFrame = true;
 }

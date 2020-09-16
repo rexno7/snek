@@ -9,11 +9,13 @@ function Snek(x, y) {
   this.draw = () => {
     ctx.fillStyle = "limegreen";
 
+    printTail();
+
     let tailPrev = {
       x: this.x,
       y: this.y
     };
-    for (let i = 0; i < this.tail.length; i++) {
+    for (let i = this.tail.length - 1; i >= 0; i--) {
       // ctx.fillRect(this.tail[i].x, this.tail[i].y, scale, scale);
       ctx.save();
       const translateX = this.tail[i].x + scale / 2;
@@ -25,33 +27,42 @@ function Snek(x, y) {
       // ctx.rotate(Math.PI / 2 * (i % 2));
       if (tailPrev.x === this.tail[i].x && tailPrev.y > this.tail[i].y) {
         // down 90
-        if (i + 1 < this.tailLength - 1) {
-          console.log(`down ${this.tail[i].x} = ${this.tail[i+1].x}`);
-        }
-        if (i + 1 < this.tailLength - 1 && this.tail[i].x !== this.tail[i + 1].x) {
+        console.log("down");
+        // ctx.rotate((Math.PI / 2) + flipY);
+        if (i - 1 >= 0 && this.tail[i].x !== this.tail[i - 1].x) {
           body = snek_body_corner;
-          console.log("corner");
-          if (this.tail[i].x < this.tail[i + 1]) {
-            ctx.rotate(Math.PI / 2);
+          if (this.tail[i].x > this.tail[i - 1].x) {
+            console.log("from right");
+            //no rotation
           } else {
+            console.log("from left");
             ctx.rotate(3 * Math.PI / 2);
           }
         } else {
           ctx.rotate((Math.PI / 2) + flipY);
         }
       } else if (tailPrev.x > this.tail[i].x && tailPrev.y === this.tail[i].y) {
-        // left 180
-        ctx.rotate(Math.PI + flipX);
+        console.log("right");
+        // right 180
+        ctx.rotate(flipX);
       } else if (tailPrev.x === this.tail[i].x && tailPrev.y < this.tail[i].y) {
         // up 270
+        console.log("up");
         ctx.rotate((3 * Math.PI / 2) + flipY);
+
       } else {
-        // right 0 / 360
-        ctx.rotate(flipX);
+        // left 0 / 360
+        console.log("left");
+        ctx.rotate(Math.PI + flipX);
       }
       ctx.drawImage(body, 0 - scale / 2, 0 - scale / 2, scale, scale);
       // ctx.translate(-translateX, -translateY);
       ctx.restore();
+
+      tailPrev = {
+        x: this.tail[i].x,
+        y: this.tail[i].y
+      };
     }
 
     drawSnekHead();
@@ -171,5 +182,14 @@ function Snek(x, y) {
     }
     return false;
   };
+
+  const printTail = () => {
+    let tailString = "";
+    tailString += `head:(${this.x},${this.y}), `;
+    for (let i = this.tail.length - 1; i >= 0; i--) {
+      tailString += `${i}:(${this.tail[i].x},${this.tail[i].y}), `;
+    }
+    console.log(tailString);
+  }
 
 }
