@@ -1,14 +1,27 @@
-function Snek(x, y) {
+function Snek(x, y, useSkin) {
   this.x = x;
   this.y = y;
   this.xSpeed = scale;
   this.ySpeed = 0;
   this.tailLength = 0;
   this.tail = [];
+  this.useSkin = true;
 
   this.draw = () => {
     ctx.fillStyle = "limegreen";
 
+    if (this.useSkin) {
+      this.drawSkin();
+    } else {
+      for (let i = 0; i < this.tail.length; i++) {
+        ctx.fillRect(this.tail[i].x, this.tail[i].y, scale, scale);
+      }
+    }
+
+    drawSnekHead();
+  }
+
+  this.drawSkin = () => {
     let tailPrev = {
       x: this.x,
       y: this.y
@@ -78,8 +91,6 @@ function Snek(x, y) {
         y: this.tail[i].y
       };
     }
-
-    drawSnekHead();
   }
 
   drawSnekHead = () => {
